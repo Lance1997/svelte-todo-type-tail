@@ -6,7 +6,7 @@
 </script>
 
 <div>
-  <h2 class="font-bold mb-4 text-4xl text-blue-900">List of Todos</h2>
+  <h2 class="font-bold mb-4 text-4xl text-blue-900">List Of Todos</h2>
   <div
     class="grid sm:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 gap-4 grid-cols-1"
   >
