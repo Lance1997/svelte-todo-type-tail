@@ -1,5 +1,6 @@
 <script lang="ts">
-  import type { Todo } from "src/types";
+  import type { Todo } from "../../types/index";
+
   export let todoInfo: Todo;
 </script>
 
