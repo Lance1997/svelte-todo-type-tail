@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { Todo } from "../../types/index";
-  import Modal from "../../components/ui/Modal.svelte";
   import Swal from "sweetalert2";
 
   // Modal properties
@@ -60,21 +59,6 @@
   }
 </script>
 
-<Modal bind:open={isOpen}>
-  <div slot="header">Delete Todo</div>
-  <div slot="content">
-    Delete todo item {" "}
-    <span class="text-green-600 font-medium">{todoInfo.text}</span>
-  </div>
-  <div slot="action">
-    <button
-      type="button"
-      class="btn-green sm:mt-0 sm:mr-3 sm:w-auto sm:text-sm mt-3 w-full px-4"
-    >
-      Confirm
-    </button>
-  </div>
-</Modal>
 <div class="p-4 bg-gray-200 shadow-xl">
   <h3 class="font-bold">
     Task:
