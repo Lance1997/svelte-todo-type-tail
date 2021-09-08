@@ -3,15 +3,17 @@
   import TodoItem from "./TodoItem.svelte";
 
   export let todoList: Todo[] = [];
+
+  export let removeTodo: (todo: Todo) => void;
 </script>
 
-<div>
+<div class="mb-8">
   <h2 class="font-bold mb-4 text-4xl text-blue-900">List Of Todos</h2>
   <div
     class="grid sm:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 gap-4 grid-cols-1"
   >
     {#each todoList as todo (todo.id)}
-      <TodoItem todoInfo={todo} />
+      <TodoItem todoInfo={todo} {removeTodo} />
     {/each}
   </div>
 </div>
