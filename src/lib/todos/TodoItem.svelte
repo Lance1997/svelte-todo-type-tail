@@ -15,7 +15,7 @@
     //fire success alert
     Swal.fire({
       title: "Hurrrayy!",
-      text: `You completed ${todo}`,
+      text: `You completed ${todo.text}`,
       icon: "success",
       toast: true,
       timer: 1000,
