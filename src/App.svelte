@@ -6,7 +6,11 @@
   import "sweetalert2/dist/sweetalert2.min.css";
   import type { Todo } from "./types";
   import { v4 as uuidv4 } from "uuid";
-  import { getFromLocalStorage, refreshLocalStorage } from "./helpers/storage";
+  import {
+    deleteTodoList,
+    getFromLocalStorage,
+    refreshLocalStorage,
+  } from "./helpers/storage";
 
   // Modal properties
   let isOpen = false;
@@ -21,9 +25,7 @@
 
   // set todo list to empty
   let todoList: Todo[] = [];
-  //create a filtered list that
-  //to avoid touching todo list
-  //we'll manipulate and return this list instead
+  //create a filtered list that is rendered
   $: filteredList = todoList;
   // store new todo item here
   let newTodo = "";
@@ -61,7 +63,12 @@
   //add todo to the list
   function addTodo() {
     //add todos new item
-    todoList = [...todoList, { id: uuidv4(), text: newTodo, status: false }];
+    if (todoList !== undefined) {
+      todoList = [...todoList, { id: uuidv4(), text: newTodo, status: false }];
+    } else {
+      todoList = [{ id: uuidv4(), text: newTodo, status: false }];
+    }
+
     refreshLocalStorage(todoList);
     //fire success alert
     Swal.fire({
@@ -77,14 +84,73 @@
     //disable the modal
     isOpen = false;
   }
-  //TODO: remove todo
-  function removeTodo(todo: Todo) {}
+
+  //remove todo
+  function removeTodo(todo: Todo) {
+    todoList = todoList.filter((item) => {
+      return item.id !== todo.id;
+    });
+    refreshLocalStorage(todoList);
+  }
+
+  //remove all todos
+  function removeAllTodos() {
+    if (todoList && todoList.length) {
+      //fire success alert
+      Swal.fire({
+        title: "Are you sure?",
+        text: "Delete all todos",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete all!",
+        cancelButtonText: "No, keep them",
+        position: "center",
+      }).then((result) => {
+        if (result.value) {
+          //empty todoList
+          todoList = [];
+          //empty localstorage
+          refreshLocalStorage(todoList);
+          //delete all todoList
+          deleteTodoList();
+
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your todo item was deleted",
+            icon: "success",
+            timer: 1000,
+            showConfirmButton: false,
+            toast: true,
+          });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          Swal.fire({
+            title: "Cancelled",
+            text: "Your todo items are safe :)",
+            icon: "error",
+            timer: 2000,
+            showConfirmButton: false,
+            toast: true,
+          });
+        }
+      });
+    } else {
+      //fire success alert
+      Swal.fire({
+        title: "Oops!",
+        text: "Cannot clear, todo items list is empty",
+        icon: "warning",
+        toast: true,
+        timer: 1000,
+        showConfirmButton: false,
+      });
+    }
+  }
 
   //mark a todo item complete
   function markComplete(todo: Todo) {
     //first find the todo item
     todoList.find((item) => item.id === todo.id).status = true;
-    filteredList = todoList;
+    todoList = todoList;
     refreshLocalStorage(todoList);
   }
 
@@ -129,7 +195,7 @@
       This is how your day looks like:
     </p>
     <!-- Add New Todo -->
-    <div class="flex justify-end mb-4">
+    <div class="flex justify-end mb-4 space-x-12">
       <button class="btn-blue" on:click={() => (isOpen = true)}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -143,6 +209,22 @@
             stroke-linejoin="round"
             stroke-width="2"
             d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+          />
+        </svg>
+      </button>
+      <button class="btn-red" on:click={removeAllTodos}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-6 h-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
           />
         </svg>
       </button>

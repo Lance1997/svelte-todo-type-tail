@@ -20,3 +20,7 @@ export function refreshLocalStorage(todoList: Todo[]): void {
     localStorage.setItem(storageName, JSON.stringify(todoList));
   }
 }
+
+export function deleteTodoList() {
+  localStorage.removeItem(storageName);
+}
