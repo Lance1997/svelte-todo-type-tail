@@ -61,7 +61,11 @@
   //add todo to the list
   function addTodo() {
     //add todos new item
-    todoList = [...todoList, { id: uuidv4(), text: newTodo, status: false }];
+    if (todoList !== undefined) {
+      todoList = [...todoList, { id: uuidv4(), text: newTodo, status: false }];
+    } else {
+      todoList = [{ id: uuidv4(), text: newTodo, status: false }];
+    }
     refreshLocalStorage(todoList);
     //reset the list of items
     filteredList = todoList;
@@ -101,7 +105,7 @@
   }
 </script>
 
-<div class="min-h-screen bg-gray-50 relative">
+<div class="relative min-h-screen bg-gray-50">
   <Modal bind:open={isOpen}>
     <div slot="header">
       Add New Todo <span class="text-sm text-gray-500"
@@ -113,7 +117,7 @@
         bind:value={newTodo}
         type="text"
         on:keydown={addNewTodo}
-        class="outline-none border-gray-300 rounded-t-xl rounded-b-sm w-full text-gray-600 focus:ring-0 focus:outline-none focus:border-gray-500 bg-gray-100"
+        class="w-full text-gray-600 bg-gray-100 border-gray-300 rounded-b-sm outline-none rounded-t-xl focus:ring-0 focus:outline-none focus:border-gray-500"
         placeholder="Enter Todo Item"
       />
     </div>
@@ -121,7 +125,7 @@
 
   <Navigation {uncompletedFilter} allTodos={allTodosFilter} {completedFilter} />
   <main
-    class="max-w-md p-4 mx-auto mt-4 text-xl bg-gray-100 xl:max-w-5xl lg:max-w-3xl sm:max-w-lg md:max-w-2xl mb-12"
+    class="max-w-md p-4 mx-auto mt-4 mb-12 text-xl bg-gray-100 xl:max-w-5xl lg:max-w-3xl sm:max-w-lg md:max-w-2xl"
   >
     <!-- Greet User -->
     <h1 class="text-6xl font-bold text-center text-blue-900">{greeting}</h1>
@@ -133,7 +137,7 @@
       <button class="btn-blue" on:click={() => (isOpen = true)}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
+          class="w-6 h-6"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
