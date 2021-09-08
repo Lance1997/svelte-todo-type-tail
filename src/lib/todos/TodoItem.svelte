@@ -6,10 +6,12 @@
   let isOpen = false;
 
   export let todoInfo: Todo;
+  export let markComplete: (todo: Todo) => void;
+  export let removeTodo: (todo: Todo) => void;
 
-  function markComplete(todo) {
-    //TODO: first mark item complete
-
+  function markTodoAsComplete(todo) {
+    //first mark item completed
+    markComplete(todo);
     //fire success alert
     Swal.fire({
       title: "Hurrrayy!",
@@ -20,8 +22,6 @@
       showConfirmButton: false,
     });
   }
-
-  export let removeTodo: (todo: Todo) => void;
 
   function removingTodo(todo: Todo) {
     Swal.fire({
@@ -59,17 +59,17 @@
   }
 </script>
 
-<div class="p-4 bg-gray-200 shadow-xl rounded-t-lg">
+<div class="p-4 bg-gray-200 rounded-t-lg shadow-xl">
   <h3 class="font-bold">
     Task:
-    <span class="text-blue-500 font-medium tracking-wide">{todoInfo.text}</span>
+    <span class="font-medium tracking-wide text-blue-500">{todoInfo.text}</span>
   </h3>
-  <div class="mt-4 flex justify-start items-center">
+  <div class="flex items-center justify-start mt-4">
     {#if todoInfo.status}
       <button class="btn-red" on:click={() => removingTodo(todoInfo)}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
+          class="w-6 h-6"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -83,10 +83,10 @@
         </svg>
       </button>
     {:else}
-      <button class="btn-green" on:click={() => markComplete(todoInfo.text)}>
+      <button class="btn-green" on:click={() => markTodoAsComplete(todoInfo)}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
+          class="w-6 h-6"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
