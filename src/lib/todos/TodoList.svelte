@@ -12,8 +12,12 @@
   <div
     class="grid sm:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 gap-4 grid-cols-1"
   >
-    {#each todoList as todo (todo.id)}
-      <TodoItem todoInfo={todo} {removeTodo} />
-    {/each}
+    {#if todoList.length < 1}
+      <p class="text-blue-400 text-md col-span-6">No todo Item available</p>
+    {:else}
+      {#each todoList as todo (todo.id)}
+        <TodoItem todoInfo={todo} {removeTodo} />
+      {/each}
+    {/if}
   </div>
 </div>

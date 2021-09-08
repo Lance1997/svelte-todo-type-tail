@@ -93,12 +93,6 @@
         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row">
           <slot name="action">
             <!-- Fallback Actions button -->
-            <button
-              type="button"
-              class="btn-green sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm mt-3 w-full"
-            >
-              Continue
-            </button>
           </slot>
           <button
             on:click={() => (open = false)}

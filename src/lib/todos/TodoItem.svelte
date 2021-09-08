@@ -13,7 +13,7 @@
     //fire success alert
     Swal.fire({
       title: "Hurrrayy!",
-      text: `Well done, you completed ${todo}`,
+      text: `You completed ${todo}`,
       icon: "success",
       toast: true,
       timer: 1000,
@@ -59,7 +59,7 @@
   }
 </script>
 
-<div class="p-4 bg-gray-200 shadow-xl">
+<div class="p-4 bg-gray-200 shadow-xl rounded-t-lg">
   <h3 class="font-bold">
     Task:
     <span class="text-blue-500 font-medium tracking-wide">{todoInfo.text}</span>
